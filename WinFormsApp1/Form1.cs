@@ -12,5 +12,11 @@ namespace WinFormsApp1
             FormBai05 formBai05 = new FormBai05();
             formBai05.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            FormBai06 formBai06 = new FormBai06();
+            formBai06.ShowDialog();
+        }
     }
 }

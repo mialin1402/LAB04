@@ -38,7 +38,7 @@ namespace WinFormsApp1
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-            rtbKetQua.Text=string.Empty;
+            rtbKetQua.Text = string.Empty;
             using (var client = new HttpClient())
             {
                 var content = new FormUrlEncodedContent(new[]

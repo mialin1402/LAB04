@@ -53,7 +53,7 @@
             tbUsrName.Name = "tbUsrName";
             tbUsrName.Size = new Size(376, 27);
             tbUsrName.TabIndex = 1;
-            tbUsrName.Text = "thanhduy";
+            tbUsrName.Text = "phatpt";
             tbUsrName.TextChanged += tb_TextChanged;
             // 
             // tbPass
@@ -62,7 +62,7 @@
             tbPass.Name = "tbPass";
             tbPass.Size = new Size(376, 27);
             tbPass.TabIndex = 2;
-            tbPass.Text = "21520780";
+            tbPass.Text = "123456";
             tbPass.TextChanged += tb_TextChanged;
             // 
             // btnLogin

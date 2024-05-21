@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\WinFormsApp1.csproj",
-      "projectName": "WinFormsApp1",
-      "projectPath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectUniqueName": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\LAB5.csproj",
+      "projectName": "LAB5",
+      "projectPath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\LAB5.csproj",
       "packagesPath": "C:\\Users\\THANH DUY\\.nuget\\packages\\",
       "outputPath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
