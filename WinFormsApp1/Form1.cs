@@ -1,3 +1,5 @@
+using LAB5;
+
 namespace WinFormsApp1
 {
     public partial class Form1 : Form
@@ -17,6 +19,12 @@ namespace WinFormsApp1
         {
             FormBai06 formBai06 = new FormBai06();
             formBai06.ShowDialog();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            FormBai07 formBai07 = new FormBai07();
+            formBai07.ShowDialog();
         }
     }
 }
