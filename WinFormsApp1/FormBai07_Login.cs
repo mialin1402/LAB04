@@ -8,12 +8,11 @@ namespace LAB5
         {
             InitializeComponent();
         }
-        public string authToken = string.Empty;
+        public string accessToken = string.Empty;
         public string tokenType = string.Empty;
         private void lbSignUp_Click(object sender, EventArgs e)
         {
-            FormBai07_SignUp formBai07 = new FormBai07_SignUp();
-            formBai07.ShowDialog();
+            this.Close();
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -42,7 +41,7 @@ namespace LAB5
                 }
 
                 tokenType = responseObject["token_type"].ToString();
-                authToken = responseObject["access_token"].ToString();
+                accessToken = responseObject["access_token"].ToString();
 
                 this.Close();
             }

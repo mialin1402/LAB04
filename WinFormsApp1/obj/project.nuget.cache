@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jEemTZinqrMlRe7h93mbv0iskjmyF+Gxm+WTl2ZHFgRG8rhKwC/cwS1KCF9LGbb4AMFlMZOi9eLxFRcCTIhkMg==",
+  "dgSpecHash": "JE9r63mo+SlRtm6M3W4DVWbQkulU2jkBf/cCfzpIMvVxSTMnoZtGu49a2/w6PxK23QW34f8PrUcsFJFWUmJ8eA==",
   "success": true,
   "projectFilePath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\LAB5.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\THANH DUY\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
