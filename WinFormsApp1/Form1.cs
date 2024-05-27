@@ -1,6 +1,4 @@
-using LAB5;
-
-namespace WinFormsApp1
+namespace LAB4
 {
     public partial class Form1 : Form
     {

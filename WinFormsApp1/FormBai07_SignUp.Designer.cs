@@ -1,4 +1,4 @@
-﻿namespace LAB5
+﻿namespace LAB4
 {
     partial class FormBai07_SignUp
     {

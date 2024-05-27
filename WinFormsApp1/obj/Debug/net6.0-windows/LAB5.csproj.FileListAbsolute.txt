@@ -22,3 +22,4 @@ D:\Benjamin_stuff\C#\LAB05\WinFormsApp1\obj\Debug\net6.0-windows\LAB5.FormBai07_
 D:\Benjamin_stuff\C#\LAB05\WinFormsApp1\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 D:\Benjamin_stuff\C#\LAB05\WinFormsApp1\obj\Debug\net6.0-windows\LAB5.csproj.AssemblyReference.cache
 D:\Benjamin_stuff\C#\LAB05\WinFormsApp1\obj\Debug\net6.0-windows\LAB5.csproj.CopyComplete
+D:\Benjamin_stuff\C#\LAB05\WinFormsApp1\obj\Debug\net6.0-windows\LAB5.FormBai07_ThemMonAn.resources

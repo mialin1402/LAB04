@@ -60,11 +60,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\LAB5.csproj",
-      "projectName": "LAB5",
-      "projectPath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\LAB5.csproj",
+      "projectUniqueName": "D:\\Benjamin_stuff\\C#\\LAB04\\WinFormsApp1\\LAB4.csproj",
+      "projectName": "LAB4",
+      "projectPath": "D:\\Benjamin_stuff\\C#\\LAB04\\WinFormsApp1\\LAB4.csproj",
       "packagesPath": "C:\\Users\\THANH DUY\\.nuget\\packages\\",
-      "outputPath": "D:\\Benjamin_stuff\\C#\\LAB05\\WinFormsApp1\\obj\\",
+      "outputPath": "D:\\Benjamin_stuff\\C#\\LAB04\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\THANH DUY\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace LAB5
+namespace LAB4
 {
     public partial class FormBai07_Login : Form
     {

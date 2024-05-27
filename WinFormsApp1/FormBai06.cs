@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace WinFormsApp1
+namespace LAB4
 {
     public partial class FormBai06 : Form
     {

@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Nodes;
 
-namespace LAB5
+namespace LAB4
 {
     public partial class FormBai07_SignUp : Form
     {
@@ -64,7 +64,7 @@ namespace LAB5
                     { "last_name", tbLastName.Text },
                     { "sex", rbtnMale.Checked ? "1" : "0" },
                     { "birthday", dateTimePicker.Value.ToString("yyyy-MM-dd") },
-                    { "language", cbLanguage.SelectedText },
+                    { "language", cbLanguage.Text },
                     { "phone", tbPhone.Text }
                 };
                 client.BaseAddress = new Uri(baseAddress);

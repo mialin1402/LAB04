@@ -19,5 +19,11 @@
     <Compile Update="FormBai07_SignUp.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FormBai07_ThemMonAn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormBai07_MonAnItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

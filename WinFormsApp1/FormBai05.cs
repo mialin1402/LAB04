@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace WinFormsApp1
+namespace LAB4
 {
     public partial class FormBai05 : Form
     {
