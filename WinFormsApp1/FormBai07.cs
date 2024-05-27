@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace LAB4
 {
@@ -12,6 +13,14 @@ namespace LAB4
         public FormBai07()
         {
             InitializeComponent();
+            cbMePage.Text = "1";
+            cbMePageSize.Text = "5";
+            cbAllPage.Text = "1";
+            cbAllPageSize.Text = "5";
+            cbAllPage.SelectedIndexChanged += Reload_SelectedChanged;
+            cbAllPageSize.SelectedIndexChanged += Reload_SelectedChanged;
+            cbMePage.SelectedIndexChanged += Reload_SelectedChanged;
+            cbMePageSize.SelectedIndexChanged += Reload_SelectedChanged;
         }
         public class Data
         {
@@ -63,45 +72,8 @@ namespace LAB4
                 return;
             }
 
-            cbMePage.Text = "1";
-            cbMePageSize.Text = "5";
+            LoadMonAn("1", "5", 0);
 
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
-                var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-                var baseAddress = "https://nt106.uitiot.vn";
-                var apiCreateUser = "/api/v1/monan/my-dishes";
-                var data = new Dictionary<string, int>
-                {
-                    { "current", int.Parse(cbMePage.Text) },
-                    { "pageSize", int.Parse(cbMePageSize.Text) }
-                };
-                client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Add(contentType);
-                var jsonData = JsonConvert.SerializeObject(data);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(apiCreateUser, content);
-                var responseString = await response.Content.ReadAsStringAsync();
-                MonAn? meMonAn = JsonConvert.DeserializeObject<MonAn>(responseString);
-                if (meMonAn == null)
-                {
-                    MessageBox.Show("Không nhận được món ăn");
-                    return;
-                }
-                dsMonAnMe.Controls.Clear();
-                foreach (Data dataMonAn in meMonAn.Data)
-                {
-                    FormBai07_MonAnItem MonAnItem = new FormBai07_MonAnItem();
-                    MonAnItem.tenMonAn = dataMonAn.ten_mon_an;
-                    MonAnItem.Gia = dataMonAn.gia;
-                    MonAnItem.DiaChi = dataMonAn.dia_chi;
-                    MonAnItem.DongGop = dataMonAn.nguoi_dong_gop;
-                    MonAnItem.AnhMonAn = LoadImageFromUrl(dataMonAn.hinh_anh);
-
-                    dsMonAnMe.Controls.Add(MonAnItem);
-                }
-            }
         }
         private Image LoadImageFromUrl(string imageUrl)
         {
@@ -114,7 +86,7 @@ namespace LAB4
                     using (MemoryStream memStream = new MemoryStream(imageBytes))
                     {
                         output = Image.FromStream(memStream);
-                        output = new Bitmap(output, new Size(150,150));
+                        output = new Bitmap(output, new Size(150, 150));
                         return output;
                     }
                 }
@@ -126,11 +98,83 @@ namespace LAB4
                 }
             }
         }
+        private async void LoadMonAn(string page, string pagesize, int tabIndex)
+        {
+            dsMonAnMe.Controls.Clear();
+            dsMonAnAll.Controls.Clear();
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+                var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+                var baseAddress = "https://nt106.uitiot.vn";
+                string apiCreateUser = tabIndex == 0 ? "/api/v1/monan/my-dishes" : "/api/v1/monan/all";
+                var data = new Dictionary<string, int>
+                {
+                    { "current", int.Parse(page) },
+                    { "pageSize", int.Parse(pagesize) }
+                };
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Add(contentType);
+                var jsonData = JsonConvert.SerializeObject(data);
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(apiCreateUser, content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                MonAn? monAn = JsonConvert.DeserializeObject<MonAn>(responseString);
+                if (monAn == null)
+                {
+                    MessageBox.Show("Không nhận được món ăn");
+                    return;
+                }
+                int totalPage = monAn.Pagination.total / (monAn.Pagination.pageSize % monAn.Pagination.total);
+                for (int i = 1; i <= totalPage; i++)
+                {
+                    if (tabIndex == 0)
+                    {
+                        cbMePage.Items.Add(i.ToString());
+                    }
+                    else
+                    {
+                        cbAllPage.Items.Add(i.ToString());
+                    }
+                }
+                dsMonAnMe.Controls.Clear();
+                foreach (Data dataMonAn in monAn.Data)
+                {
+                    FormBai07_MonAnItem MonAnItem = new FormBai07_MonAnItem();
+                    MonAnItem.tenMonAn = dataMonAn.ten_mon_an;
+                    MonAnItem.Gia = dataMonAn.gia;
+                    MonAnItem.DiaChi = dataMonAn.dia_chi;
+                    MonAnItem.DongGop = dataMonAn.nguoi_dong_gop;
+                    MonAnItem.AnhMonAn = LoadImageFromUrl(dataMonAn.hinh_anh);
 
+                    if (tabIndex == 0)
+                    {
+                        dsMonAnMe.Controls.Add(MonAnItem);
+                    }
+                    else
+                    {
+                        dsMonAnAll.Controls.Add(MonAnItem);
+                    }
+
+                }
+            }
+        }
         private void btnThemMonAn_Click(object sender, EventArgs e)
         {
             FormBai07_ThemMonAn formBai07_ThemMonAn = new FormBai07_ThemMonAn();
             formBai07_ThemMonAn.ShowDialog();
+        }
+
+        private void Reload_SelectedChanged(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedIndex == 0)
+            {
+                LoadMonAn(cbMePage.Text, cbMePageSize.Text, 0);
+            }
+            else
+            {
+                LoadMonAn(cbAllPage.Text, cbAllPageSize.Text, 1);
+            }
         }
     }
 }

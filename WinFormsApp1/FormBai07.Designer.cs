@@ -37,6 +37,7 @@
             cbMePageSize = new ComboBox();
             label2 = new Label();
             tabPage2 = new TabPage();
+            progressBar2 = new ProgressBar();
             cbAllPage = new ComboBox();
             label4 = new Label();
             cbAllPageSize = new ComboBox();
@@ -58,6 +59,7 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(876, 673);
             tabControl.TabIndex = 1;
+            tabControl.SelectedIndexChanged += Reload_SelectedChanged;
             // 
             // tabPage1
             // 
@@ -84,6 +86,7 @@
             // 
             // dsMonAnMe
             // 
+            dsMonAnMe.AutoScroll = true;
             dsMonAnMe.Location = new Point(6, 6);
             dsMonAnMe.Name = "dsMonAnMe";
             dsMonAnMe.Size = new Size(856, 594);
@@ -109,6 +112,7 @@
             // cbMePageSize
             // 
             cbMePageSize.FormattingEnabled = true;
+            cbMePageSize.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" });
             cbMePageSize.Location = new Point(809, 606);
             cbMePageSize.Name = "cbMePageSize";
             cbMePageSize.Size = new Size(53, 28);
@@ -125,6 +129,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(progressBar2);
             tabPage2.Controls.Add(cbAllPage);
             tabPage2.Controls.Add(label4);
             tabPage2.Controls.Add(cbAllPageSize);
@@ -137,6 +142,13 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "All";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // progressBar2
+            // 
+            progressBar2.Location = new Point(150, 606);
+            progressBar2.Name = "progressBar2";
+            progressBar2.Size = new Size(471, 29);
+            progressBar2.TabIndex = 9;
             // 
             // cbAllPage
             // 
@@ -158,6 +170,7 @@
             // cbAllPageSize
             // 
             cbAllPageSize.FormattingEnabled = true;
+            cbAllPageSize.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" });
             cbAllPageSize.Location = new Point(809, 606);
             cbAllPageSize.Name = "cbAllPageSize";
             cbAllPageSize.Size = new Size(53, 28);
@@ -174,6 +187,7 @@
             // 
             // dsMonAnAll
             // 
+            dsMonAnAll.AutoScroll = true;
             dsMonAnAll.Location = new Point(6, 6);
             dsMonAnAll.Name = "dsMonAnAll";
             dsMonAnAll.Size = new Size(856, 594);
@@ -238,5 +252,6 @@
         private Label label5;
         private FlowLayoutPanel dsMonAnAll;
         private ProgressBar progressBar1;
+        private ProgressBar progressBar2;
     }
 }
