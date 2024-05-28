@@ -45,6 +45,7 @@
             dsMonAnAll = new FlowLayoutPanel();
             label1 = new Label();
             btnThemMonAn = new Button();
+            btnRandom = new Button();
             tabControl.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -214,11 +215,22 @@
             btnThemMonAn.UseVisualStyleBackColor = true;
             btnThemMonAn.Click += btnThemMonAn_Click;
             // 
+            // btnRandom
+            // 
+            btnRandom.Location = new Point(594, 93);
+            btnRandom.Name = "btnRandom";
+            btnRandom.Size = new Size(142, 65);
+            btnRandom.TabIndex = 4;
+            btnRandom.Text = "Ăn gì đây ?";
+            btnRandom.UseVisualStyleBackColor = true;
+            btnRandom.Click += btnRandom_Click;
+            // 
             // FormBai07
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 820);
+            Controls.Add(btnRandom);
             Controls.Add(btnThemMonAn);
             Controls.Add(label1);
             Controls.Add(tabControl);
@@ -253,5 +265,6 @@
         private FlowLayoutPanel dsMonAnAll;
         private ProgressBar progressBar1;
         private ProgressBar progressBar2;
+        private Button btnRandom;
     }
 }

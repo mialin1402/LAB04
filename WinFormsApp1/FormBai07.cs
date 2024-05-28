@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Text.Json.Nodes;
 using System.Text;
-using System.Windows.Forms;
 using System.Net;
-using System.Runtime.CompilerServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing.Printing;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LAB4
 {
@@ -49,6 +49,7 @@ namespace LAB4
         }
         string accessToken = string.Empty;
         string tokenType = string.Empty;
+        private MonAn monAn = new MonAn(); 
         private async void FormBai07_Load(object sender, EventArgs e)
         {
             FormBai07_Login formBai07_Login = new FormBai07_Login();
@@ -107,7 +108,7 @@ namespace LAB4
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
                 var contentType = new MediaTypeWithQualityHeaderValue("application/json");
                 var baseAddress = "https://nt106.uitiot.vn";
-                string apiCreateUser = tabIndex == 0 ? "/api/v1/monan/my-dishes" : "/api/v1/monan/all";
+                string apiCreateUser = (tabIndex == 0) ? "/api/v1/monan/my-dishes" : "/api/v1/monan/all";
                 var data = new Dictionary<string, int>
                 {
                     { "current", int.Parse(page) },
@@ -119,13 +120,15 @@ namespace LAB4
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(apiCreateUser, content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                MonAn? monAn = JsonConvert.DeserializeObject<MonAn>(responseString);
+                monAn = JsonConvert.DeserializeObject<MonAn>(responseString);
                 if (monAn == null)
                 {
                     MessageBox.Show("Không nhận được món ăn");
                     return;
                 }
-                int totalPage = monAn.Pagination.total / (monAn.Pagination.pageSize % monAn.Pagination.total);
+                int totalPage = (monAn.Pagination.total == 0) ? 1 : monAn.Pagination.total / (monAn.Pagination.pageSize % monAn.Pagination.total);
+                cbMePage.Items.Clear();
+                cbAllPage.Items.Clear();
                 for (int i = 1; i <= totalPage; i++)
                 {
                     if (tabIndex == 0)
@@ -141,6 +144,7 @@ namespace LAB4
                 foreach (Data dataMonAn in monAn.Data)
                 {
                     FormBai07_MonAnItem MonAnItem = new FormBai07_MonAnItem();
+                    MonAnItem.id = dataMonAn.id;
                     MonAnItem.tenMonAn = dataMonAn.ten_mon_an;
                     MonAnItem.Gia = dataMonAn.gia;
                     MonAnItem.DiaChi = dataMonAn.dia_chi;
@@ -149,6 +153,8 @@ namespace LAB4
 
                     if (tabIndex == 0)
                     {
+                        MonAnItem.DoubleClick += MonAnItem_DoubleClick;
+                        MonAnItem.Cursor = Cursors.Hand;
                         dsMonAnMe.Controls.Add(MonAnItem);
                     }
                     else
@@ -159,10 +165,43 @@ namespace LAB4
                 }
             }
         }
+
+        private async void MonAnItem_DoubleClick(object sender, EventArgs e)
+        {
+            FormBai07_MonAnItem monan = (FormBai07_MonAnItem)sender;
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+                    var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+                    var baseAddress = "https://nt106.uitiot.vn";
+                    string api = $"/api/v1/monan/{monan.id}";
+                    client.BaseAddress = new Uri(baseAddress);
+                    client.DefaultRequestHeaders.Accept.Add(contentType);
+                    var response = await client.DeleteAsync(api);
+                    var resonseStatus = response.StatusCode;
+                    if (resonseStatus != HttpStatusCode.OK)
+                    {
+                        MessageBox.Show("Không thể xoá món ăn");
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Không thể xoá món ăn");
+                return;
+            }
+
+        }
+
         private void btnThemMonAn_Click(object sender, EventArgs e)
         {
-            FormBai07_ThemMonAn formBai07_ThemMonAn = new FormBai07_ThemMonAn();
+            FormBai07_ThemMonAn formBai07_ThemMonAn = new FormBai07_ThemMonAn(accessToken, tokenType);
             formBai07_ThemMonAn.ShowDialog();
+
+            LoadMonAn(cbMePage.Text, cbMePageSize.Text, 0);
         }
 
         private void Reload_SelectedChanged(object sender, EventArgs e)
@@ -176,5 +215,35 @@ namespace LAB4
                 LoadMonAn(cbAllPage.Text, cbAllPageSize.Text, 1);
             }
         }
+
+        private void btnRandom_Click(object sender, EventArgs e)
+        {
+            int randomIndex = new Random().Next(0, monAn.Data.Count);
+
+            Data HomNayAn = monAn.Data[randomIndex];
+
+            FormBai07_MonAnItem _MonAnItem = new FormBai07_MonAnItem();
+            _MonAnItem.tenMonAn = HomNayAn.ten_mon_an;
+            _MonAnItem.Gia = HomNayAn.gia;
+            _MonAnItem.DiaChi = HomNayAn.dia_chi;
+            _MonAnItem.DongGop = HomNayAn.nguoi_dong_gop;
+            _MonAnItem.AnhMonAn = LoadImageFromUrl(HomNayAn.hinh_anh);
+
+            Form window = new Form
+            {
+                Text = $"Đi ăn {HomNayAn.ten_mon_an} đi",
+                TopLevel = true,
+                FormBorderStyle = FormBorderStyle.Fixed3D, //Disables user resizing
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ClientSize = _MonAnItem.Size //size the form to fit the content
+            };
+
+            window.Controls.Add(_MonAnItem);
+            _MonAnItem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            window.ShowDialog();
+        }
+
+
     }
 }
