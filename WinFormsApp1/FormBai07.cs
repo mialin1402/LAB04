@@ -2,9 +2,6 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Net;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Drawing.Printing;
-using System.Reflection.Metadata.Ecma335;
 
 namespace LAB4
 {
@@ -126,7 +123,7 @@ namespace LAB4
                     MessageBox.Show("Không nhận được món ăn");
                     return;
                 }
-                int totalPage = (monAn.Pagination.total == 0) ? 1 : monAn.Pagination.total / (monAn.Pagination.pageSize % monAn.Pagination.total);
+                int totalPage = (monAn.Pagination.total < monAn.Pagination.pageSize) ? 1 : monAn.Pagination.total / monAn.Pagination.pageSize;
                 cbMePage.Items.Clear();
                 cbAllPage.Items.Clear();
                 for (int i = 1; i <= totalPage; i++)
@@ -168,6 +165,7 @@ namespace LAB4
 
         private async void MonAnItem_DoubleClick(object sender, EventArgs e)
         {
+            MessageBox.Show("Đang xoá món ăn");
             FormBai07_MonAnItem monan = (FormBai07_MonAnItem)sender;
             try
             {
@@ -187,6 +185,8 @@ namespace LAB4
                         return;
                     }
                 }
+
+                LoadMonAn(cbMePage.Text, cbMePageSize.Text, 0);
             }
             catch
             {
